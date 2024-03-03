@@ -150,7 +150,7 @@ public class Aerolinea
      * Retorna todos los vuelos de la aerolínea
      * @return
      */
-    public Collection<Vuelo> getVuelos( )
+    public List<Vuelo> getVuelos( )
     {
         return vuelos;
     }
@@ -163,8 +163,25 @@ public class Aerolinea
      */
     public Vuelo getVuelo( String codigoRuta, String fechaVuelo )
     {
-        // TODO implementar
-        return null;
+    	boolean encontro=false;
+    	int i=0;
+    	Vuelo rta =vuelos.get(i);
+    	while (encontro==false && i< vuelos.size()) {
+    		Vuelo vuelo=vuelos.get(i);
+    		if (vuelo.getFecha()==fechaVuelo && vuelo.getRuta().getCodigoRuta()==codigoRuta) {
+    			encontro =true;
+    			rta=vuelo;	
+    		}
+    		else {
+    			i++;
+    		}
+    	}
+    	if (encontro==true) {
+    		return rta;
+    	}
+    	else {
+    		return null;
+        }
     }
 
     /**
@@ -182,8 +199,13 @@ public class Aerolinea
      */
     public Collection<Tiquete> getTiquetes( )
     {
-        // TODO implementar
-        return null;
+    	List<Tiquete> rta= new LinkedList<Tiquete>();
+        for (Vuelo vuelo:vuelos) {
+        	Collection <Tiquete> tv=vuelo.getTiquetes();
+        	tv.addAll(rta);
+        	
+        }
+        return rta;
 
     }
 

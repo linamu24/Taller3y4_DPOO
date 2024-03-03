@@ -1,5 +1,6 @@
 package uniandes.dpoo.aerolinea.modelo;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
@@ -36,6 +37,10 @@ public class Vuelo {
 		return ruta;
 	}
 	
+	public Collection <Tiquete> getTiquetes() {
+		return tiquetes.values();
+	}
+
 	public int venderTiquetes (Cliente cliente, CalculadoraTarifas calculadora, int cantidad) {
 		
 		// TODO Implementar el método
