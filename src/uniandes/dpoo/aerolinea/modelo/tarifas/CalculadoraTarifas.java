@@ -12,24 +12,23 @@ public abstract class CalculadoraTarifas {
 	//Metodos
 	public int calcularTarifa (Vuelo vuelo, Cliente cliente) {
 		
-		// TODO Implementar el método
-		return 0;
+		double cB= calcularCostoBase (vuelo, cliente);
+		double pD=calcularPorcentajeDescuento (cliente);
+	
+		double tarifa= cB - (cB*pD) + (cB-(cB*pD))*IMPUESTO;
+		return (int)tarifa;
 	}
 	
 	protected abstract int calcularCostoBase (Vuelo vuelo, Cliente cliente);
 	
 	protected abstract double calcularPorcentajeDescuento (Cliente cliente);
 	
-	protected int calcularDistanciaVuelo (Ruta ruta) {
-		
-		// TODO Implementar el método
-		return 0;
-	}
 	
 	protected int calcularValorImpuestos (int costoBase) {
 		
-		// TODO Implementar el método
-		return 0;
+		double impuesto= (double)costoBase* IMPUESTO;
+		return (int)impuesto;
 	}
 
+	
 }

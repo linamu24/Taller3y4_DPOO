@@ -3,9 +3,12 @@ package uniandes.dpoo.aerolinea.modelo;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import uniandes.dpoo.aerolinea.exceptions.VueloSobrevendidoException;
 import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
 import uniandes.dpoo.aerolinea.modelo.tarifas.CalculadoraTarifas;
 import uniandes.dpoo.aerolinea.tiquetes.Tiquete;
+import uniandes.dpoo.aerolinea.tiquetes.GeneradorTiquetes;
 
 public class Vuelo {
 	
@@ -41,16 +44,33 @@ public class Vuelo {
 		return tiquetes.values();
 	}
 
-	public int venderTiquetes (Cliente cliente, CalculadoraTarifas calculadora, int cantidad) {
+	public int venderTiquetes (Cliente cliente, CalculadoraTarifas calculadora, int cantidad) throws VueloSobrevendidoException {
+		int cantidadT= cantidad + tiquetes.size();
 		
-		// TODO Implementar el método
-		return 0;
+		
+		if (cantidadT<=avion.getCapacidad()) {
+			int tarifa= calculadora.calcularTarifa(this, cliente);
+			int precioTotal=tarifa*cantidad;
+			while (cantidad>0) {
+				Tiquete tiquete= GeneradorTiquetes.generarTiquete(this,cliente,tarifa );
+				tiquetes.put(tiquete.getCodigo(), tiquete);
+				cliente.agregarTiquete(tiquete);
+				GeneradorTiquetes.registrarTiquete(tiquete);
+				}
+			
+			
+			return precioTotal;	
+			
+		}	
+		else {
+			throw new VueloSobrevendidoException(this);
+		}
+		
 	}
 	
 	public boolean equals (Object obj) {
 		
-		// TODO Implementar el método
-		return false;
+		return super.equals(obj);
 	}
 
 }

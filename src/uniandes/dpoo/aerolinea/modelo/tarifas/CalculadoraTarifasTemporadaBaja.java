@@ -1,7 +1,10 @@
 package uniandes.dpoo.aerolinea.modelo.tarifas;
 
+import uniandes.dpoo.aerolinea.modelo.Aeropuerto;
+import uniandes.dpoo.aerolinea.modelo.Ruta;
 import uniandes.dpoo.aerolinea.modelo.Vuelo;
 import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
+import uniandes.dpoo.aerolinea.modelo.cliente.ClienteCorporativo;
 
 public class CalculadoraTarifasTemporadaBaja extends CalculadoraTarifas 
 {
@@ -16,16 +19,46 @@ public class CalculadoraTarifasTemporadaBaja extends CalculadoraTarifas
 	//Metodos
 	public int calcularCostoBase (Vuelo vuelo, Cliente cliente) {
 		
-		// TODO Implementar el método
-		return 0;
+		Aeropuerto a1=vuelo.getRuta().getOrigen();
+		Aeropuerto a2=vuelo.getRuta().getDestino();
+		int distancia= Aeropuerto.calcularDistancia(a1,a2);
+		int costo= 0;
+		
+		if (cliente.getTipoCliente()=="Natural") {
+			costo =distancia*COSTO_POR_KM_NATURAL;
+		}
+		else {
+			costo =distancia*COSTO_POR_KM_CORPORATIVO;
+		}
+		
+		return costo;
 		
 	}
 	
 	public double calcularPorcentajeDescuento (Cliente cliente) {
+
+		double descuento=0;
+		if (cliente.getTipoCliente()=="Corporativo") {
+			descuento= descuentoCorporativo((ClienteCorporativo) cliente);
+
+		}
+		return descuento;
 		
-		// TODO Implementar el método
-		return 0;
-		
+	}
+
+	private double descuentoCorporativo(ClienteCorporativo cliente) {
+		int tamanio=cliente.getTamanoEmpresa();
+		double descuento=0;
+		if (tamanio==1) {
+			descuento=DESCUENTO_GRANDES;
+		}
+		else if (tamanio==2) {
+			descuento=DESCUENTO_MEDIANAS;
+		}
+		else if (tamanio==3) {
+			descuento=DESCUENTO_PEQ;
+		}
+		return descuento;
 	}
 
 

@@ -1,6 +1,10 @@
 package uniandes.dpoo.aerolinea.modelo.cliente;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.json.JSONObject;
+import uniandes.dpoo.aerolinea.modelo.Aerolinea;
 
 /**
  * Esta clase se usa para representar a los clientes de la aerolínea que son empresas
@@ -14,11 +18,14 @@ public class ClienteCorporativo extends Cliente
 	public static int PEQUENA = 3;
 	private String	nombreEmpresa;		
 	private int	tamanoEmpresa;	
+	private String identificador;
+	
 	
 	//Constructor
     public ClienteCorporativo(String nombreEmpresa, int tamano) {
     	this.nombreEmpresa=nombreEmpresa;
     	this.tamanoEmpresa=tamano;
+    	this.identificador=crearIdentificador();
     }
 
     //Metodos
@@ -35,10 +42,24 @@ public class ClienteCorporativo extends Cliente
 	}
 	
 	public String getIdentificador() {
-		// TODO Implementar el método
-		return "";
+		return identificador;
 	}
-    
+	
+	public String crearIdentificador () {
+		int numero = ( int ) ( Math.random( ) * 10e7 );
+        String codigo = "" + numero;
+        while( codigo.length( ) < 7 )
+            codigo = "0" + codigo;
+        codigo="C"+codigo;
+        
+        
+        while (codigos.contains( codigo ) ) {
+        	crearIdentificador();
+        	
+        }
+        return codigo;
+	}
+   
     /**
      * Crea un nuevo objeto de tipo a partir de un objeto JSON.
      * 

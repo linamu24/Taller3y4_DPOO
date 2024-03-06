@@ -5,10 +5,12 @@ public class ClienteNatural extends Cliente{
 	//Atributos
 	public static String NATURAL = "Natural";	
 	private String	nombre;		
+	private String identificador;
 		
 	//Constructor
 	public ClienteNatural (String	nombre) {
 		this.nombre=nombre;
+		this.identificador=crearIdentificador();
 	}
 	
 	//Metodos
@@ -17,9 +19,23 @@ public class ClienteNatural extends Cliente{
 	}
 	
 	public String getIdentificador() {
-		// TODO Implementar el método
-		return "";
+		
+		return identificador;
 	}
 	
+	public String crearIdentificador () {
+		int numero = ( int ) ( Math.random( ) * 10e7 );
+        String codigo = "" + numero;
+        while( codigo.length( ) < 7 )
+            codigo = "0" + codigo;
+        codigo="N"+codigo;
+        
+        
+        while (codigos.contains( codigo ) ) {
+        	crearIdentificador();
+        	
+        }
+        return codigo;
+	}
 
 }

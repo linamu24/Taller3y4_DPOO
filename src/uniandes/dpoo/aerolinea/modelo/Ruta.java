@@ -47,8 +47,26 @@ public class Ruta
 	}
 	
 	public int getDuracion() {
-		// TODO Implementar el método
-		return 0;
+		int rta=0;
+		int horasS = getHoras(horaSalida);
+		int minutosS = getMinutos(horaSalida);
+		int horasL = getHoras(horaLlegada);
+		int minutosL = getMinutos(horaLlegada);
+		
+		if (Integer.parseInt( horaSalida )>Integer.parseInt( horaLlegada)) {
+			int horas=(24-horasS+horasL)*60;
+			int minutos= minutosL-minutosS;	
+			rta=horas+minutos;
+			
+		}
+		else {
+			int horas=(horasL-horasS)*60;
+			int minutos= minutosL-minutosS;	
+			rta=horas+minutos;
+		}
+		
+		
+		return rta;
 	}
 
 	/**
